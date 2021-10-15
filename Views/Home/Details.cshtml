@@ -1,0 +1,126 @@
+﻿@model PaceWisdomAssignment.Models.items
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <div class="row">
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.title)
+        </div>
+
+        <div class="col-md-10 text-left title">
+            @Html.DisplayFor(model => model.title)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.link)
+        </div>
+
+        <div class="col-md-10 text-left link">
+            @Html.DisplayFor(model => model.link)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.date_taken)
+        </div>
+
+        <div class="col-md-10 text-left date_taken">
+            @Html.DisplayFor(model => model.date_taken)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.description)
+        </div>
+
+        <div class="col-md-10 text-left description">
+            @Html.DisplayFor(model => model.description)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.published)
+        </div>
+
+        <div class="col-md-10 text-left published">
+            @Html.DisplayFor(model => model.published)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.author)
+        </div>
+
+        <div class="col-md-10 text-left author">
+            @Html.DisplayFor(model => model.author)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.author_id)
+        </div>
+
+        <div class="col-md-10 text-left author_id">
+            @Html.DisplayFor(model => model.author_id)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.tags)
+        </div>
+
+        <div class="col-md-10 text-left tags">
+            @Html.DisplayFor(model => model.tags)
+        </div>
+
+        <div class="col-md-2 text-right">
+            media
+        </div>
+
+        <div class="col-md-10 text-left media">
+        </div>
+
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetApiData();
+    });
+    function GetApiData() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetApiData",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (customers) {
+                var JsonObj = eval(customers);
+                pos = JsonObj.indexOf("({") + 1;
+                JsonObj = '[' + JsonObj.slice(pos, JsonObj.lastIndexOf("})") + 1) + ']';
+                JsonObj = eval(JsonObj);
+                $(JsonObj).each(function (i, d) {
+                    $(JsonObj[i].items).each(function (i2, d2) {
+                        if (d2.title == '@ViewData["name"]') {
+                            $('.title').html(d2.title);
+                            $('.link').html(d2.link);
+                            $('.date_taken').html(d2.date_taken);
+                            $('.description').html(d2.description);
+                            $('.published').html(d2.published);
+                            $('.author').html(d2.author);
+                            $('.author_id').html(d2.author_id);
+                            $('.tags').html(d2.tags);
+                            $('.tags').html(d2.tags);
+                            $(JsonObj[i].items[i2].media).each(function (i3, d3) {
+                                $('.media').append('<div class="col-md-3"><img src=' + d3.m +' height="200px" /></div>');
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    }
+</script>

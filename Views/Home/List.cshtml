@@ -1,0 +1,74 @@
+﻿@model PaceWisdomAssignment.Models.DataMain
+
+@{
+    ViewBag.Title = "List";
+}
+<h3>List Using Model Class</h3>
+<div class="col-md-12" style="border: 1px solid #ccc; padding: 0 15px; margin-bottom:20px;">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.link)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.modified)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.generator)
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.link)
+            </td>
+            @*<td>
+                @Html.DisplayFor(model => model.description)
+            </td>*@
+            <td>
+                @Html.DisplayFor(model => model.modified)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.generator)
+            </td>
+        </tr>
+    </table>
+</div>
+<h3>Items List</h3>
+<table class='table child-tbl' style="border: 1px solid #ccc;">
+    <tr style="background: #f1f1f1;">
+        <th>title</th>
+        <th>link</th>
+        <th>author</th>
+        <th>author_id</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var item in Model.items)
+    {
+        <tr>
+            <td>
+                @item.title
+            </td>
+            <td>
+                @item.link
+            </td>
+            <td>
+                @item.author
+            </td>
+            <td>
+                @item.author_id
+            </td>
+            <td>
+                <a href="/Home/ModelDetails?id=@item.title">Detail</a>
+            </td>
+        </tr>
+    }
+</table>

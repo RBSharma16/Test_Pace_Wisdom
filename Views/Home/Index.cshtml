@@ -1,0 +1,88 @@
+﻿@model IEnumerable<PaceWisdomAssignment.Models.DataMain>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List Using JQuery</h2>  
+<table class="table" id="tblApiData">
+    <tr>
+        <th>
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.link)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.generator)
+        </th>
+    </tr>
+
+</table>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetApiData();
+    });
+    function GetApiData() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetApiData",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (customers) {
+                var table = $("#tblApiData");
+                table.find("tr:not(:first)").remove();
+                var JsonObj = eval(customers);
+                pos = JsonObj.indexOf("({") + 1;
+                JsonObj = '[' + JsonObj.slice(pos, JsonObj.lastIndexOf("})") + 1) + ']';
+                JsonObj = eval(JsonObj);
+                $(JsonObj).each(function (i, d) {
+                    var table = $("#tblApiData");
+                    var row = table[0].insertRow(-1);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(0).html('<a><i class="glyphicon glyphicon-plus-sign"></i></a>');
+                    $(row).append("<td />");
+                    $(row).find("td").eq(1).html(d.title);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(2).html(d.link);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(3).html(d.description);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(4).html(d.modified);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(5).html(d.generator);
+                    var _html = "<table class='table child-tbl hide'><tr><th>title</th><th>link</th><th>author</th><td>author_id</th><th>Action</th></tr>";
+                    $(JsonObj[i].items).each(function (i2, d2) {
+                        _html += '<tr><td>' + d2.title + '</td ><td>' + d2.link + '</td><td>' + d2.author + '</td><td>' + d2.author_id + '</td><td><a href="Home/Details?id=' + d2.title + '">Detail</a></td></tr>';
+                    });
+                    _html += "</table>";
+                    row = table[0].insertRow(-1);
+                    $(row).append("<td></td><td colspan='5' />");
+                    $(row).find("td").eq(1).html(_html);
+                });
+            }
+        });
+    }
+    $("[class*=glyphicon-plus-sign]").live("click", function () {
+        $('.child-tbl').addClass('hide');
+        $(this).closest("tr").next("tr").find('table').removeClass('hide');
+        $(this).removeClass("glyphicon-plus-sign");
+        $(this).addClass("glyphicon-minus-sign");
+    });
+    $("[class*=glyphicon-minus-sign]").live("click", function () {
+        $(this).addClass("glyphicon-plus-sign");
+        $(this).removeClass("glyphicon-minus-sign");
+        $(this).closest("tr").next("tr").find('table').addClass('hide');
+    });
+</script>

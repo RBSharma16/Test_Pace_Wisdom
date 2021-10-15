@@ -1,0 +1,90 @@
+﻿@model PaceWisdomAssignment.Models.items
+    @using PaceWisdomAssignment.Models;
+
+@{
+    ViewBag.Title = "ModelDetails";
+    media _med = Model.media;
+}
+
+<h2>Item Detail</h2>
+
+
+<div>
+    <div class="row">
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.title)
+        </div>
+
+        <div class="col-md-10 text-left title">
+            @Html.DisplayFor(model => model.title)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.link)
+        </div>
+
+        <div class="col-md-10 text-left link">
+            @Html.DisplayFor(model => model.link)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.date_taken)
+        </div>
+
+        <div class="col-md-10 text-left date_taken">
+            @Html.DisplayFor(model => model.date_taken)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.description)
+        </div>
+
+        <div class="col-md-10 text-left description">
+            @Html.Raw(Model.description)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.published)
+        </div>
+
+        <div class="col-md-10 text-left published">
+            @Html.DisplayFor(model => model.published)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.author)
+        </div>
+
+        <div class="col-md-10 text-left author">
+            @Html.DisplayFor(model => model.author)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.author_id)
+        </div>
+
+        <div class="col-md-10 text-left author_id">
+            @Html.DisplayFor(model => model.author_id)
+        </div>
+
+        <div class="col-md-2 text-right">
+            @Html.DisplayNameFor(model => model.tags)
+        </div>
+
+        <div class="col-md-10 text-left tags">
+            @Html.DisplayFor(model => model.tags)
+        </div>
+
+        <div class="col-md-2 text-right">
+            media
+        </div>
+
+        <div class="col-md-10 text-left media">
+            <div class="col-md-3"><img src="@_med.m" height="200px" /></div>
+        </div>
+
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "List")
+</p>
